@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
 import { ProductGrid } from "@/components/ProductGrid";
+import { Footer } from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -11,11 +12,7 @@ const Index = () => {
         <h2 className="font-display text-3xl md:text-4xl font-bold mb-8">Our Collection</h2>
         <ProductGrid />
       </main>
-      <footer className="border-t py-8">
-        <div className="container text-center text-sm text-muted-foreground">
-          © 2026 Fabric & Style. All rights reserved.
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -3,10 +3,28 @@ import { useParams, Link } from "react-router-dom";
 import { storefrontApiRequest, STOREFRONT_PRODUCT_BY_HANDLE_QUERY } from "@/lib/shopify";
 import type { ShopifyProduct } from "@/lib/shopify";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Loader2, ArrowLeft } from "lucide-react";
+import { ShoppingCart, Loader2, ArrowLeft, Heart } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
+import { useWishlistStore } from "@/stores/wishlistStore";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
+
+const WishlistButton = ({ productId }: { productId: string }) => {
+  const toggleItem = useWishlistStore(state => state.toggleItem);
+  const wishlisted = useWishlistStore(state => state.isWishlisted)(productId);
+  return (
+    <Button
+      size="lg"
+      variant="outline"
+      onClick={() => {
+        toggleItem(productId);
+        toast.success(wishlisted ? "Removed from wishlist" : "Added to wishlist", { position: "top-center" });
+      }}
+    >
+      <Heart className={`h-4 w-4 ${wishlisted ? 'fill-destructive text-destructive' : ''}`} />
+    </Button>
+  );
+};
 
 export default function ProductDetail() {
   const { handle } = useParams<{ handle: string }>();
@@ -125,10 +143,13 @@ export default function ProductDetail() {
               </div>
             )}
 
-            <Button size="lg" onClick={handleAddToCart} disabled={isLoading || !variant?.availableForSale} className="w-full md:w-auto">
-              {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ShoppingCart className="h-4 w-4 mr-2" />}
-              Add to Cart
-            </Button>
+            <div className="flex gap-3">
+              <Button size="lg" onClick={handleAddToCart} disabled={isLoading || !variant?.availableForSale} className="flex-1 md:flex-none">
+                {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ShoppingCart className="h-4 w-4 mr-2" />}
+                Add to Cart
+              </Button>
+              <WishlistButton productId={product.id} />
+            </div>
           </div>
         </div>
       </div>
