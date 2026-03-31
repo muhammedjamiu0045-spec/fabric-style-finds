@@ -8,7 +8,12 @@ export const Header = () => {
         <Link to="/" className="font-display text-2xl font-semibold tracking-tight text-foreground">
           Fabric & Style
         </Link>
-        <CartDrawer />
+        <div className="flex items-center gap-6">
+          <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            About
+          </Link>
+          <CartDrawer />
+        </div>
       </div>
     </header>
   );
