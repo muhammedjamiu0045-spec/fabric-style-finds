@@ -11,10 +11,10 @@ export const HeroSection = () => {
       <div className="absolute inset-0 bg-foreground/40" />
       <div className="relative z-10 container h-full flex flex-col justify-center items-start">
         <h1 className="font-display text-5xl md:text-7xl font-bold text-primary-foreground mb-4 animate-fade-in">
-          Clothing & Fabrics
+          Tradition Meets Style
         </h1>
         <p className="text-lg md:text-xl text-primary-foreground/90 max-w-lg font-light animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          Discover premium quality garments and exquisite fabrics for every occasion. Curated with care, crafted with passion.
+          Shop authentic African attire — from regal Agbadas and elegant Jalabiyahs to vibrant Ankara prints and fine lace fabrics. Handpicked for the modern traditionalist.
         </p>
       </div>
     </section>
