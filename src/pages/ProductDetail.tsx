@@ -9,6 +9,23 @@ import { useWishlistStore } from "@/stores/wishlistStore";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 
+const WishlistButton = ({ productId }: { productId: string }) => {
+  const toggleItem = useWishlistStore(state => state.toggleItem);
+  const wishlisted = useWishlistStore(state => state.isWishlisted)(productId);
+  return (
+    <Button
+      size="lg"
+      variant="outline"
+      onClick={() => {
+        toggleItem(productId);
+        toast.success(wishlisted ? "Removed from wishlist" : "Added to wishlist", { position: "top-center" });
+      }}
+    >
+      <Heart className={`h-4 w-4 ${wishlisted ? 'fill-destructive text-destructive' : ''}`} />
+    </Button>
+  );
+};
+
 export default function ProductDetail() {
   const { handle } = useParams<{ handle: string }>();
   const [product, setProduct] = useState<ShopifyProduct["node"] | null>(null);
