@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Loader2 } from "lucide-react";
+import { ShoppingCart, Loader2, Heart } from "lucide-react";
 import { useCartStore, type ShopifyProduct } from "@/stores/cartStore";
+import { useWishlistStore } from "@/stores/wishlistStore";
 import { toast } from "sonner";
 
 interface ProductCardProps {
@@ -11,6 +12,9 @@ interface ProductCardProps {
 export const ProductCard = ({ product }: ProductCardProps) => {
   const addItem = useCartStore(state => state.addItem);
   const isLoading = useCartStore(state => state.isLoading);
+  const toggleItem = useWishlistStore(state => state.toggleItem);
+  const isWishlisted = useWishlistStore(state => state.isWishlisted)(product.node.id);
+
   const { node } = product;
   const image = node.images.edges[0]?.node;
   const variant = node.variants.edges[0]?.node;
@@ -31,9 +35,19 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     toast.success("Added to cart", { description: node.title, position: "top-center" });
   };
 
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleItem(node.id);
+    toast.success(isWishlisted ? "Removed from wishlist" : "Added to wishlist", {
+      description: node.title,
+      position: "top-center",
+    });
+  };
+
   return (
     <Link to={`/product/${node.handle}`} className="group block">
-      <div className="overflow-hidden rounded-md bg-card aspect-[3/4] mb-3">
+      <div className="overflow-hidden rounded-md bg-card aspect-[3/4] mb-3 relative">
         {image ? (
           <img
             src={image.url}
@@ -46,6 +60,14 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             <span className="text-muted-foreground text-sm">No image</span>
           </div>
         )}
+        <button
+          onClick={handleWishlist}
+          className="absolute top-2 right-2 p-2 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-colors"
+        >
+          <Heart
+            className={`h-4 w-4 transition-colors ${isWishlisted ? 'fill-destructive text-destructive' : 'text-muted-foreground'}`}
+          />
+        </button>
       </div>
       <h3 className="font-display text-lg font-semibold truncate">{node.title}</h3>
       <p className="text-muted-foreground text-sm line-clamp-1 mb-2">{node.description}</p>
