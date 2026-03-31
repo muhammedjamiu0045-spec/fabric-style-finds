@@ -3,8 +3,9 @@ import { useParams, Link } from "react-router-dom";
 import { storefrontApiRequest, STOREFRONT_PRODUCT_BY_HANDLE_QUERY } from "@/lib/shopify";
 import type { ShopifyProduct } from "@/lib/shopify";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Loader2, ArrowLeft } from "lucide-react";
+import { ShoppingCart, Loader2, ArrowLeft, Heart } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
+import { useWishlistStore } from "@/stores/wishlistStore";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 
