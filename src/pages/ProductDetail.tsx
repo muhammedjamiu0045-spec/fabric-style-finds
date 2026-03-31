@@ -126,10 +126,13 @@ export default function ProductDetail() {
               </div>
             )}
 
-            <Button size="lg" onClick={handleAddToCart} disabled={isLoading || !variant?.availableForSale} className="w-full md:w-auto">
-              {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ShoppingCart className="h-4 w-4 mr-2" />}
-              Add to Cart
-            </Button>
+            <div className="flex gap-3">
+              <Button size="lg" onClick={handleAddToCart} disabled={isLoading || !variant?.availableForSale} className="flex-1 md:flex-none">
+                {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ShoppingCart className="h-4 w-4 mr-2" />}
+                Add to Cart
+              </Button>
+              <WishlistButton productId={product.id} />
+            </div>
           </div>
         </div>
       </div>
